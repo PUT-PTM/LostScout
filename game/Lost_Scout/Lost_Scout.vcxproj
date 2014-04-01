@@ -98,6 +98,7 @@
     <ClCompile Include="text.cpp" />
     <ClCompile Include="upgrade.cpp" />
     <ClCompile Include="wave.cpp" />
+    <ClCompile Include="_STM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="text.h" />
     <ClInclude Include="upgrade.h" />
     <ClInclude Include="wave.h" />
+    <ClInclude Include="_STM.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Img\avenger.png" />

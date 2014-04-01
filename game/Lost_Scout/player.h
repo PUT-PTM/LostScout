@@ -15,6 +15,7 @@ private:
 	int imgX, imgY;
 	ALLEGRO_BITMAP *player;
 
+
 	int nrShoot, nrKilled, nrLeft;
 
 	int stage;
@@ -77,5 +78,5 @@ public:
 	void setTimer(int timer);
 
 
-	void move(); // KOD DO STMa
+	void move( char * buffer); // KOD DO STMa
 };

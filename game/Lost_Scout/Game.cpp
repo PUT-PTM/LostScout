@@ -11,6 +11,8 @@
 #include "sound.h"
 #include "mechanic.h"
 #include "bitmap.h"
+
+#include "_STM.h"
 enum KEYS{ UP, DOWN, LEFT, RIGHT, SPACE, R };
 
 void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TIMER *timer, Bitmap & mBitmap){
@@ -39,14 +41,27 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 
 	bool keys[6] = {false, false, false, false, false, false};
 
+
 	al_start_timer(timer);	
 
-	
+	////////////////STM
+	bool conn = FindTheHID();	
+	char buffer_out[64];
+	char buffer_in[64];
+	for (int i=0;i<64;i++) {
+		buffer_out[i]=0;	
+		buffer_in[i]=0;
+	}
 
+	////////////////STM
 	while(!end){
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(eventQueue, &ev);
-
+		if(conn){
+			ReadInputReport(buffer_in);	//////////STM
+		}else{
+			cout <<"'";
+		}
 
 		if(ev.type == ALLEGRO_EVENT_KEY_DOWN){
 			switch(ev.keyboard.keycode)	{
@@ -135,8 +150,8 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 			al_rest(0.35);
 			end = true;
 		}
+		else if(ev.type == ALLEGRO_EVENT_TIMER){		
 
-		else if(ev.type == ALLEGRO_EVENT_TIMER){
 			mSound.game();
 			rysuj = true;
 			if(!pause){
@@ -148,7 +163,14 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 					mPlayer.left();
 				if(keys[RIGHT])
 					mPlayer.right();
-				//mPlayer.move();	//KOD DO STMa
+
+				///////////KOD DO STMa
+				if(conn){
+					mPlayer.move(buffer_in);	
+				}else{
+					//cout <<"'";
+				}
+				///////////KOD DO STMa
 			}
 			if(!mConf.gameOver){
 				if(!pause){

@@ -4,6 +4,8 @@
 #include "sound.h"
 #include "bitmap.h"
 #include "player.h"
+
+#include "_STM.h"
 Player::Player(){
 
 	player = al_load_bitmap("Img/player.png");
@@ -46,6 +48,7 @@ void Player::down(){
 		y = mConf.getHeight() -50;
 	}
 }
+
 void Player::left(){
 	x -= speed;
 	if(x < 0 + 50){
@@ -179,7 +182,70 @@ while(!end){
 	void Player::setTimer(int timer){ this->timer = timer;}
 
 	////// KOD DO STMa
-	void Player::move(){
+	void Player::move( char * buffer){
+		USHORT	ByteNumber;
+		CHAR	ReceivedByte;
+		/*for (ByteNumber=0; ByteNumber < 4; ByteNumber++)
+		{
+			//Get a byte.
+			ReceivedByte = buffer[ByteNumber];
+			//Display it.
+			cout << (int)ReceivedByte <<", ";
+		}*/
+		Config mConf;
+		// OŒ X
+		if(buffer[1] < -10 && buffer[1] > -20){
+			//wolno X prawo
+				x += speed/2;
+				if(x > mConf.getWidth() - 55){
+					x = mConf.getWidth() -55;
+				}
+		} else if(buffer[1] <= -20) {
+			//szybko X prawo
+				x += speed;
+				if(x > mConf.getWidth() - 55){
+					x = mConf.getWidth() -55;
+				}
+		} else if(buffer[1] > 10 && buffer[1] < 20) {
+			//wolno X lewo
+				x -= speed/2;
+				if(x < 0 + 50){
+					x = 50;
+				}
+		} else if(buffer[1] >= 20) {
+			//szybko X lewo
+				x -= speed;
+				if(x < 0 + 50){
+					x = 50;
+				}
+					}
+
+		// OŒ Y
+		if(buffer[2] > 15 && buffer[2] < 30){
+			//wolno Y góra
+				y -= speed/2;
+				if(y < 0 + 55){
+					y = 55;
+				}
+		} else if(buffer[2] >= 30) {
+			//szybko Y góra
+				y -= speed;
+				if(y < 0 + 55){
+					y = 55;
+				}
+		} else if(buffer[2] < -15 && buffer[2] > -30) {
+			//wolno Y dó³
+				y += speed/2;
+				if(y > mConf.getHeight() - 50){
+					y = mConf.getHeight() -50;
+				}
+		} else if(buffer[2] <= -30) {
+			//szybko Y dó³
+				y += speed;
+				if(y > mConf.getHeight() - 50){
+					y = mConf.getHeight() -50;
+				}
+		}
 
 	}
 	////// KOD DO STMa
