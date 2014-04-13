@@ -9,6 +9,8 @@
 #include "bitmap.h"
 #include "mechanic.h"
 #include "text.h"
+
+#include "_STM.h"
 void Mechanic::Fire(Bullet mBullet[], int max, Player &mPlayer){
 	for( int i = 0; i < max; i++){
 
@@ -159,6 +161,9 @@ void Mechanic::PlayerColl(Enemy mEnemy[], int max, Player &mPlayer, Sound &mSoun
 					mEnemy[i].setLive(false);
 				mPlayer.setRestTime(180);
 				mPlayer.setDmg(10);
+
+
+				WriteOutputReportEdit(1);
 			}
 		}
 	}
@@ -314,6 +319,12 @@ void Mechanic::PlayerUpgrade(Upgrade &mUpgrade, Player &mPlayer, Sound &mSound){
 				if(mPlayer.getDmg() <= 20){
 					mPlayer.setDmg(mPlayer.getDmg() + 10);
 					mPlayer.setScore(mPlayer.getScore() + 500);	
+					//////////STM
+					if(mPlayer.getDmg() == 20)
+						WriteOutputReportEdit(2);
+					else if(mPlayer.getDmg() == 30)
+						WriteOutputReportEdit(3);
+					//////////STM
 				}
 				cout << "Zwiêkszasz dmg do:" << mPlayer.getDmg() << endl;
 				break;
@@ -321,8 +332,12 @@ void Mechanic::PlayerUpgrade(Upgrade &mUpgrade, Player &mPlayer, Sound &mSound){
 				mPlayer.setLives(mPlayer.getLives() + 1);
 				mPlayer.setScore(mPlayer.getScore() + 500);
 				cout << "Zwiêkszasz ¿ycie do:" << mPlayer.getLives() << endl;
+				//////////STM
+				WriteOutputReportEdit(4);
+				//////////STM
 			}
 			mSound.upgrade(mUpgrade.getType());
+			
 		}
 	}
 }
