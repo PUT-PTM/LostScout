@@ -580,8 +580,8 @@ int main(void)
 
 	{
 
-		przyxx=0;
-		przyyy=0;
+		//przyxx=0;
+		//przyyy=0;
 
 
 
@@ -610,7 +610,7 @@ int main(void)
 
 		//	  {
 
-		do{
+		//do{
 		LIS302DL_Read(&przyspieszenie_x, LIS302DL_OUT_X_ADDR, 1);
 		if(przyspieszenie_x>127)
 		{
@@ -632,9 +632,9 @@ int main(void)
 			przyspieszenie_z=(~przyspieszenie_z)&0xFF;
 			przyspieszenie_z=-przyspieszenie_z;
 		}
-		przyx[temp]=przyspieszenie_x;
-		przyy[temp]=przyspieszenie_y;
-		temp++;
+		//przyx[temp]=przyspieszenie_x;
+		//przyy[temp]=przyspieszenie_y;
+		/*temp++;
 		}while(temp<8);
 		for(i=0; i<8; i++){
 		przyxx+=przyx[i];
@@ -642,7 +642,7 @@ int main(void)
 		}
 		przyspieszenie_x=przyxx/8;
 		przyspieszenie_y=przyyy/8;
-
+*/
 		InBuffer[1] = przyspieszenie_x;
 		InBuffer[0] = przyspieszenie_y;
 		//InBuffer[4] = przyspieszenie_z;
