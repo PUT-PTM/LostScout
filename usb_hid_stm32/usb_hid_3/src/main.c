@@ -568,6 +568,11 @@ int main(void)
 	przerwania();
 	int temp=0;
 	char button=0;
+	int przyx[8];
+	int przyy[8];
+	int przyxx=0;
+	int przyyy=0;
+	int i=0;
 	// zielone swiatelko na poczatek
 	GPIO_SetBits(GPIOD, GPIO_Pin_12);
 
@@ -575,7 +580,8 @@ int main(void)
 
 	{
 
-
+		przyxx=0;
+		przyyy=0;
 
 
 
@@ -604,7 +610,7 @@ int main(void)
 
 		//	  {
 
-	//	do{
+		do{
 		LIS302DL_Read(&przyspieszenie_x, LIS302DL_OUT_X_ADDR, 1);
 		if(przyspieszenie_x>127)
 		{
@@ -626,8 +632,16 @@ int main(void)
 			przyspieszenie_z=(~przyspieszenie_z)&0xFF;
 			przyspieszenie_z=-przyspieszenie_z;
 		}
-
-	//	}while(temp<8);
+		przyx[temp]=przyspieszenie_x;
+		przyy[temp]=przyspieszenie_y;
+		temp++;
+		}while(temp<8);
+		for(i=0; i<8; i++){
+		przyxx+=przyx[i];
+		przyyy+=przyy[i];
+		}
+		przyspieszenie_x=przyxx/8;
+		przyspieszenie_y=przyyy/8;
 
 		InBuffer[1] = przyspieszenie_x;
 		InBuffer[0] = przyspieszenie_y;
@@ -662,16 +676,16 @@ int main(void)
 
 		}else if(OutBuffer[1] == 2){
 
-			//zapal ���t�, zga� zielon�
+			//zapal żółtą, zgaś zieloną
 			GPIO_SetBits(GPIOD, GPIO_Pin_13);
 			GPIO_ResetBits(GPIOD, GPIO_Pin_12);
 		}else if(OutBuffer[1] == 3){
-			//zapal czerwon�, zga� ���t�
+			//zapal czerwoną, zgaś żółtą
 			GPIO_SetBits(GPIOD, GPIO_Pin_14);
 			GPIO_ResetBits(GPIOD, GPIO_Pin_13);
 
 		}else if(OutBuffer[1] == 1 && OutBuffer[2] == 1  ){
-			//zapal zielona, zga� czerwona, zapal na chwile niebieska, zgas pomaranczowa i czerwona
+			//zapal zielona, zgaś czerwona, zapal na chwile niebieska, zgas pomaranczowa i czerwona
 			GPIO_SetBits(GPIOD, GPIO_Pin_12);
 			GPIO_ResetBits(GPIOD, GPIO_Pin_14);
 			GPIO_ResetBits(GPIOD, GPIO_Pin_13);
@@ -695,35 +709,35 @@ void przerwania(void){
     	NVIC_InitTypeDef NVIC_InitStructure;
     	// numer przerwania
     	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
-    	// priorytet g��wny
+    	// priorytet główny
     	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;
     	// subpriorytet
     	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;
-    	// uruchom dany kana�
+    	// uruchom dany kanał
     	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    	// zapisz wype�nion� struktur� do rejestr�w
+    	// zapisz wypełnioną strukturę do rejestrów
     	NVIC_Init(&NVIC_InitStructure);
 
-    	// wyczyszczenie przerwania od timera 3 (wyst�pi�o przy konfiguracji timera)
+    	// wyczyszczenie przerwania od timera 3 (wystąpiło przy konfiguracji timera)
     	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
-    	// zezwolenie na przerwania od przepe�nienia dla timera 3
+    	// zezwolenie na przerwania od przepełnienia dla timera 3
     	TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
 
     	NVIC_InitTypeDef NVIC_InitStructure2;
     	// numer przerwania
     	NVIC_InitStructure2.NVIC_IRQChannel = TIM4_IRQn;
-    	// priorytet g��wny
+    	// priorytet główny
     	NVIC_InitStructure2.NVIC_IRQChannelPreemptionPriority = 0x00;
     	// subpriorytet
     	NVIC_InitStructure2.NVIC_IRQChannelSubPriority = 0x00;
-    	// uruchom dany kana�
+    	// uruchom dany kanał
     	NVIC_InitStructure2.NVIC_IRQChannelCmd = ENABLE;
-    	// zapisz wype�nion� struktur� do rejestr�w
+    	// zapisz wypełnioną strukturę do rejestrów
     	NVIC_Init(&NVIC_InitStructure2);
 
-    	// wyczyszczenie przerwania od timera 3 (wyst�pi�o przy konfiguracji timera)
+    	// wyczyszczenie przerwania od timera 3 (wystąpiło przy konfiguracji timera)
     	TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
-    	// zezwolenie na przerwania od przepe�nienia dla timera 3
+    	// zezwolenie na przerwania od przepełnienia dla timera 3
     	TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE);
     }
 void TIM3_IRQHandler(void)
