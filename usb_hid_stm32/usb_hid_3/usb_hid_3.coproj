@@ -151,9 +151,9 @@
     <File name="Libraries/CMSIS/Include/core_cmInstr.h" path="Libraries/CMSIS/Include/core_cmInstr.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h" type="1"/>
-    <File name="src/usb_conf.h" path="src/usb_conf.h" type="1"/>
-    <File name="Libraries/STM32_USB_Device_Library/Core/src/usbd_ioreq.c" path="Libraries/STM32_USB_Device_Library/Core/src/usbd_ioreq.c" type="1"/>
     <File name="src/usbd_conf.h" path="src/usbd_conf.h" type="1"/>
+    <File name="Libraries/STM32_USB_Device_Library/Core/src/usbd_ioreq.c" path="Libraries/STM32_USB_Device_Library/Core/src/usbd_ioreq.c" type="1"/>
+    <File name="src/usb_conf.h" path="src/usb_conf.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h" type="1"/>
     <File name="src/usb_bsp.c" path="src/usb_bsp.c" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc" path="" type="2"/>
@@ -167,8 +167,8 @@
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dac.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dac.c" type="1"/>
     <File name="Libraries/STM32_USB_Device_Library/Class/hid_custom/inc" path="" type="2"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_rng.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_rng.c" type="1"/>
-    <File name="src/usbd_desc.h" path="src/usbd_desc.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_cryp_tdes.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_cryp_tdes.c" type="1"/>
+    <File name="src/usbd_desc.h" path="src/usbd_desc.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_gpio.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_gpio.c" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_crc.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_crc.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_syscfg.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_syscfg.h" type="1"/>
@@ -200,10 +200,10 @@
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_hash_md5.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_hash_md5.c" type="1"/>
     <File name="Libraries" path="" type="2"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_can.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_can.c" type="1"/>
-    <File name="Libraries/STM32_USB_Device_Library/Core/inc/usbd_def.h" path="Libraries/STM32_USB_Device_Library/Core/inc/usbd_def.h" type="1"/>
     <File name="Libraries/Device/STM32F4xx/Include" path="" type="2"/>
-    <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_flash.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_flash.h" type="1"/>
+    <File name="Libraries/STM32_USB_Device_Library/Core/inc/usbd_def.h" path="Libraries/STM32_USB_Device_Library/Core/inc/usbd_def.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_rcc.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_rcc.c" type="1"/>
+    <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_flash.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_flash.h" type="1"/>
     <File name="Libraries/STM32_USB_Device_Library/Class/hid_custom/src" path="" type="2"/>
     <File name="Libraries/STM32_USB_OTG_Driver/src/usb_dcd.c" path="Libraries/STM32_USB_OTG_Driver/src/usb_dcd.c" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dbgmcu.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dbgmcu.c" type="1"/>
@@ -230,8 +230,8 @@
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_hash.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_hash.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dbgmcu.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dbgmcu.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_wwdg.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_wwdg.h" type="1"/>
-    <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_spi.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_spi.c" type="1"/>
     <File name="Libraries/STM32_USB_OTG_Driver/inc/usb_dcd_int.h" path="Libraries/STM32_USB_OTG_Driver/inc/usb_dcd_int.h" type="1"/>
+    <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_spi.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_spi.c" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_cryp.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_cryp.h" type="1"/>
     <File name="src/stm32f4xx_conf.h" path="src/stm32f4xx_conf.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rtc.h" path="Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rtc.h" type="1"/>
@@ -250,8 +250,8 @@
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_exti.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_exti.c" type="1"/>
     <File name="Libraries/CMSIS/Include/core_cmFunc.h" path="Libraries/CMSIS/Include/core_cmFunc.h" type="1"/>
-    <File name="Libraries/CMSIS/Include/core_cm4.h" path="Libraries/CMSIS/Include/core_cm4.h" type="1"/>
     <File name="src/system_stm32f4xx.c" path="src/system_stm32f4xx.c" type="1"/>
+    <File name="Libraries/CMSIS/Include/core_cm4.h" path="Libraries/CMSIS/Include/core_cm4.h" type="1"/>
     <File name="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c" path="Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c" type="1"/>
   </Files>
 </Project>

@@ -28,6 +28,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	bool score = false;
 	bool save = false;
 	bool pause = false;
+	int blokstrzal = 0;
 	Player mPlayer;
 	Text mText;
 	Mechanic mMech;
@@ -199,7 +200,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 						}
 						
 						mMech.TangoDown( mEnemy, mBullet, mConf.getMaxEnemy(), mConf.getMaxBullet(), mPlayer, mWave, mSound);
-						mMech.PlayerColl(mEnemy, mConf.getMaxEnemy(), mPlayer, mSound);
+						//mMech.PlayerColl(mEnemy, mConf.getMaxEnemy(), mPlayer, mSound);
 						mMech.PlayerUpgrade(mUpgrade, mPlayer, mSound);
 					}
 					if(mPlayer.getLives() <= 0){
@@ -212,6 +213,19 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 
 		if(rysuj && al_is_event_queue_empty(eventQueue))
 		{
+
+					if(buffer_in[3] == 1 && blokstrzal == 0){
+						if(mPlayer.getRestTime() == 0){
+							cout << "a";
+							mSound.shoot();
+							mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer);
+							blokstrzal = 20;
+						}
+					} else if(buffer_in[3] == 0){
+						blokstrzal = 0;
+					}
+					if(blokstrzal > 0)
+						blokstrzal--;
 
 			rysuj = false;
 			if(!mConf.gameOver){

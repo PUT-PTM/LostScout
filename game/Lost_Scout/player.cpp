@@ -193,6 +193,22 @@ while(!end){
 			cout << (int)ReceivedByte <<", ";
 		}*/
 		Config mConf;
+
+		cout << (int)buffer[1] << "   " << (int)buffer[2] << "   " << (int)buffer[3] << endl;
+
+		x = x + buffer[1]/3;
+		if(x > mConf.getWidth() - 55){
+					x = mConf.getWidth() -55;
+		} else if(x < 0 + 50){
+					x = 50;
+		}
+		y = y + buffer[2]/3;
+		if(y > mConf.getHeight() - 50){
+					y = mConf.getHeight() -50;
+		} else if(y < 0 + 55){
+					y = 55;
+				}
+		/*
 		// OŒ X
 		if(buffer[1] < -10 && buffer[1] > -20){
 			//wolno X prawo
@@ -246,6 +262,6 @@ while(!end){
 					y = mConf.getHeight() -50;
 				}
 		}
-
+		*/
 	}
 	////// KOD DO STMa
