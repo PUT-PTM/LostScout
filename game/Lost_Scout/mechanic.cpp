@@ -224,9 +224,6 @@ int Mechanic::getLevel(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &
 	int max = 4;
 	Text mText;
 
-
-
-
 	while(!end){
 		mSound.game();
 		mText.drawUI(mBitmap);
@@ -303,6 +300,83 @@ int Mechanic::getLevel(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &
 	return wybor;
 
 }
+
+int Mechanic::getPlayers(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &mSound){
+	bool end = false;
+	ALLEGRO_FONT *font36 = al_load_font("Starcraft.ttf", 36, 0);
+	ALLEGRO_FONT *font24 = al_load_font("Starcraft.ttf", 24, 0);
+	Config mConf;
+	int wybor = 1;
+	int max = 2;
+	Text mText;
+
+	while(!end){
+		mSound.game();
+		mText.drawUI(mBitmap);
+		al_draw_textf(font36, al_map_rgb(220,220,220), mConf.getWidth() / 2, 40, ALLEGRO_ALIGN_CENTER , "Wybierz ilosc graczy");
+
+		ALLEGRO_EVENT ev;
+		al_wait_for_event(eventQueue, &ev);
+
+
+		if(ev.type == ALLEGRO_EVENT_KEY_DOWN){
+			switch(ev.keyboard.keycode)	{
+			case ALLEGRO_KEY_UP:
+				mSound.point();
+				wybor--;
+				break;
+			case ALLEGRO_KEY_DOWN:
+				mSound.point();
+				wybor++;
+				break;
+			case ALLEGRO_KEY_ENTER:
+				mSound.click();
+				al_rest(0.35);
+				end = true;
+				break;
+			case ALLEGRO_KEY_ESCAPE:
+				mSound.click();
+				al_rest(0.35);
+				wybor = 0;
+				end = true;
+
+				break;
+
+			}
+		}
+		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
+			wybor = 0;
+			end = true;
+		}
+
+		if(wybor <=0 && !end){
+			wybor = max;
+		}
+		if(wybor > max){
+			wybor = 1;
+		}
+
+		if(wybor == 1){
+			al_draw_textf(font24, al_map_rgb(255,0,0), mConf.getWidth() / 2, 200, ALLEGRO_ALIGN_CENTER , "Jeden gracz");
+		} else {
+			al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, 200, ALLEGRO_ALIGN_CENTER , "Jeden gracz");
+		}
+		if(wybor == 2){
+			al_draw_textf(font24, al_map_rgb(255,0,0), mConf.getWidth() / 2, 250, ALLEGRO_ALIGN_CENTER , "Dwóch graczy");
+		} else {
+			al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, 250, ALLEGRO_ALIGN_CENTER , "Dwóch graczy");
+		}
+
+		mText.viewInfo();
+		mText.viewVersion();
+		al_flip_display();
+		al_clear_to_color(al_map_rgb(0,0,0));
+	}
+	cout << "Ilosc graczy: " << wybor << endl;
+	return wybor;
+
+}
+
 
 void Mechanic::PlayerUpgrade(Upgrade &mUpgrade, Player &mPlayer, Sound &mSound){
 	if(mUpgrade.getLive()){

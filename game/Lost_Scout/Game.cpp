@@ -13,7 +13,7 @@
 #include "bitmap.h"
 
 #include "_STM.h"
-enum KEYS{ UP, DOWN, LEFT, RIGHT, SPACE, R };
+enum KEYS{ UP, DOWN, LEFT, RIGHT, SPACE, UP2, DOWN2, LEFT2, RIGHT2, SPACE2, R };
 
 void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TIMER *timer, Bitmap & mBitmap){
 	Config mConf;
@@ -29,7 +29,8 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	bool save = false;
 	bool pause = false;
 	int blokstrzal = 0;
-	Player mPlayer;
+	Player mPlayer1;
+	Player mPlayer2;
 	Text mText;
 	Mechanic mMech;
 	Sound mSound;
@@ -40,7 +41,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	al_register_event_source(eventQueue, al_get_display_event_source(display));
 	al_register_event_source(eventQueue, al_get_timer_event_source(timer));
 
-	bool keys[6] = {false, false, false, false, false, false};
+	bool keys[11] = {false, false, false, false, false, false, false, false, false, false, false};
 
 
 	al_start_timer(timer);	
@@ -55,6 +56,9 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	}
 
 	////////////////STM
+
+	int graczy = mMech.getPlayers(eventQueue, mBitmap, mSound);
+
 	while(!end){
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(eventQueue, &ev);
@@ -66,6 +70,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 
 		if(ev.type == ALLEGRO_EVENT_KEY_DOWN){
 			switch(ev.keyboard.keycode)	{
+				//PLAYER 1
 			case ALLEGRO_KEY_UP:
 				keys[UP] = true;
 				break;
@@ -79,12 +84,35 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 				keys[LEFT] = true;
 				break;
 			case ALLEGRO_KEY_SPACE:
-				if(!pause && !mConf.gameOver && mPlayer.getRestTime() == 0){
+				if(!pause && !mConf.gameOver && mPlayer1.getRestTime() == 0){
 					mSound.shoot();
-					mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer);
+					mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer1);
 				}
 				keys[SPACE] = true;
 				break;
+			if(graczy == 2){
+				//PLAYER 2
+				case ALLEGRO_KEY_W:
+					keys[UP2] = true;
+					break;
+				case ALLEGRO_KEY_S:
+					keys[DOWN2] = true;
+					break;
+				case ALLEGRO_KEY_D:
+					keys[RIGHT2] = true;
+					break;
+				case ALLEGRO_KEY_A:
+					keys[LEFT2] = true;
+					break;
+				case ALLEGRO_KEY_G:
+					if(!pause && !mConf.gameOver && mPlayer2.getRestTime() == 0){
+						mSound.shoot();
+						mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer2);
+					}
+					keys[SPACE2] = true;
+					break;
+				}
+
 			case ALLEGRO_KEY_ESCAPE:
 				mSound.click();
 				al_rest(0.35);
@@ -97,15 +125,18 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 			case ALLEGRO_KEY_R:
 				if(mConf.gameOver){
 					mSound.click();
-					mMech.Restart(mPlayer, mEnemy, mBullet, mConf);
+					mMech.Restart(mPlayer1, mEnemy, mBullet, mConf);
+					if(graczy == 2){
+					mMech.Restart(mPlayer2, mEnemy, mBullet, mConf);
+					}
 					save = false;
 					mConf.gameOver = false;
 				}
 				break;
 			case ALLEGRO_KEY_ENTER:
-				if(mConf.gameOver && save == false){
+				if(mConf.gameOver && save == false && graczy == 1){
 					mSound.click();
-					mPlayer.saveScore(eventQueue, mBitmap, mSound);
+					mPlayer1.saveScore(eventQueue, mBitmap, mSound);
 					save = true;
 				}
 				break;
@@ -143,6 +174,25 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 			case ALLEGRO_KEY_SPACE:
 				keys[SPACE] = false;
 				break;
+
+			if(graczy == 2){
+				//PLAYER 2
+				case ALLEGRO_KEY_W:
+					keys[UP2] = false;
+					break;
+				case ALLEGRO_KEY_S:
+					keys[DOWN2] = false;
+					break;
+				case ALLEGRO_KEY_D:
+					keys[RIGHT2] = false;
+					break;
+				case ALLEGRO_KEY_A:
+					keys[LEFT2] = false;
+					break;
+				case ALLEGRO_KEY_G:
+					keys[SPACE2] = false;
+					break;
+			}
 			}
 		}
 
@@ -157,17 +207,24 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 			rysuj = true;
 			if(!pause){
 				if(keys[UP])
-					mPlayer.up();
+					mPlayer1.up();
 				if(keys[DOWN])
-					mPlayer.down();
+					mPlayer1.down();
 				if(keys[LEFT])
-					mPlayer.left();
+					mPlayer1.left();
 				if(keys[RIGHT])
-					mPlayer.right();
-
+					mPlayer1.right();
+				if(keys[UP2])
+					mPlayer2.up();
+				if(keys[DOWN2])
+					mPlayer2.down();
+				if(keys[LEFT2])
+					mPlayer2.left();
+				if(keys[RIGHT2])
+					mPlayer2.right();
 				///////////KOD DO STMa
 				if(conn){
-					mPlayer.move(buffer_in);	
+					mPlayer1.move(buffer_in);	
 				}else{
 					//cout <<"'";
 				}
@@ -175,37 +232,44 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 			}
 			if(!mConf.gameOver){
 				if(!pause){
-					mWave.wyzwalacz(mEnemy, mConf.getMaxEnemy(), mPlayer, mBitmap, mUpgrade);
+					mWave.wyzwalacz(mEnemy, mConf.getMaxEnemy(), mPlayer1, mBitmap, mUpgrade);		//!!!
 
 					for(int i=0 ; i < mConf.getMaxBullet(); i++){
 						if(mBullet[i].getLive())
 							mBullet[i].update();
 					}
 					if(mUpgrade.getLive())
-						mUpgrade.update(mPlayer);
-					if(mPlayer.getRestTime() == 0){
+						mUpgrade.update(mPlayer1);		//!!!
+					if(mPlayer1.getRestTime() == 0){		//!!!
 						mBG.update();
 						for(int i=0 ; i < mConf.getMaxEnemy(); i++){
-							if(mEnemy[i].getReady() && mEnemy[i].getReleseTime() == mPlayer.getTimer()){
+							if(mEnemy[i].getReady() && mEnemy[i].getReleseTime() == mPlayer1.getTimer()){		//!!!
 								mEnemy[i].setLive(true);
 								mEnemy[i].setReady(false);
 							}
 							if(mEnemy[i].getLive())
-								mEnemy[i].updateWave(mPlayer);
+								mEnemy[i].updateWave(mPlayer1);		//!!!
 						}
-						if(mUpgrade.getReady() && mUpgrade.getReleseTime() == mPlayer.getTimer()){
+						if(mUpgrade.getReady() && mUpgrade.getReleseTime() == mPlayer1.getTimer()){		//!!!
 							mUpgrade.setLive(true);
 							mUpgrade.setReady(false); 
 							mSound.newUpgrade();
 						}
 						
-						mMech.TangoDown( mEnemy, mBullet, mConf.getMaxEnemy(), mConf.getMaxBullet(), mPlayer, mWave, mSound);
-						//mMech.PlayerColl(mEnemy, mConf.getMaxEnemy(), mPlayer, mSound);
-						mMech.PlayerUpgrade(mUpgrade, mPlayer, mSound);
+						mMech.TangoDown( mEnemy, mBullet, mConf.getMaxEnemy(), mConf.getMaxBullet(), mPlayer1, mWave, mSound);
+						if(graczy == 2)
+							mMech.TangoDown( mEnemy, mBullet, mConf.getMaxEnemy(), mConf.getMaxBullet(), mPlayer2, mWave, mSound);
+						mMech.PlayerColl(mEnemy, mConf.getMaxEnemy(), mPlayer1, mSound);
+						if(graczy == 2)
+							mMech.PlayerColl(mEnemy, mConf.getMaxEnemy(), mPlayer2, mSound);
+						
+						mMech.PlayerUpgrade(mUpgrade, mPlayer1, mSound);
+						if(graczy == 2)
+							mMech.PlayerUpgrade(mUpgrade, mPlayer2, mSound);
 					}
-					if(mPlayer.getLives() <= 0){
+					if(mPlayer1.getLives() <= 0 || mPlayer2.getLives() <= 0 ){
 						mConf.gameOver = true;
-						cout << "Koniec gry, wynik: " << mPlayer.getScore() << endl;
+						cout << "Koniec gry, wynik: " << mPlayer1.getScore() << endl;
 					}
 				}
 			}
@@ -213,12 +277,12 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 
 		if(rysuj && al_is_event_queue_empty(eventQueue))
 		{
-
+			//STM
 					if(buffer_in[3] == 1 && blokstrzal == 0){
-						if(mPlayer.getRestTime() == 0){
+						if(mPlayer1.getRestTime() == 0){
 							cout << "a";
 							mSound.shoot();
-							mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer);
+							mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer1);
 							blokstrzal = 20;
 						}
 					} else if(buffer_in[3] == 0){
@@ -226,24 +290,26 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 					}
 					if(blokstrzal > 0)
 						blokstrzal--;
-
+			//STM
 			rysuj = false;
 			if(!mConf.gameOver){
 				mBG.show();
-				if(mPlayer.getRestTime() == 0 && !pause){
-					mPlayer.incTimer();
+				if(mPlayer1.getRestTime() == 0 && !pause){
+					mPlayer1.incTimer();
 				}
-				if(mPlayer.getRestTime() > 0){
-					if(mPlayer.getRestTime() % 3 == 0){
-						mPlayer.show();
+				if(mPlayer1.getRestTime() > 0){
+					if(mPlayer1.getRestTime() % 3 == 0){
+						mPlayer1.show();
+						mPlayer2.show();
 					}
 				} else {
-					mPlayer.show();
+					mPlayer1.show();
+					mPlayer2.show();
 				}
 
 				for(int i=0 ; i < mConf.getMaxBullet(); i++){
 					if(mBullet[i].getLive())
-						mBullet[i].show(mPlayer);
+						mBullet[i].show(mPlayer1); ////////////////////////////////////
 				}
 				for(int i=0 ; i < mConf.getMaxEnemy(); i++){
 					if(mEnemy[i].getLive())
@@ -255,19 +321,19 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 				if(pause){
 					mText.pause();
 				}
-				if(mPlayer.getRestTime() > 0){
-					if(mPlayer.getRestTime() > 180){
-						mText.nextPhase(mPlayer);
+				if(mPlayer1.getRestTime() > 0){
+					if(mPlayer1.getRestTime() > 180){
+						mText.nextPhase(mPlayer1);
 					}
-					mText.countDown(mPlayer);
-					mPlayer.setRestTime(mPlayer.getRestTime() - 1);
+					mText.countDown(mPlayer1);
+					mPlayer1.setRestTime(mPlayer1.getRestTime() - 1);
 				}
 				mText.drawUI(mBitmap);
-				mText.viewScore(mPlayer.getScore(), mPlayer.getLives(), mPlayer.getNrKilled(), mPlayer.getNrLeft(), mPlayer.getNrShoots());
-				mText.timer(mPlayer);
+				mText.viewScore(mPlayer1.getScore(), mPlayer1.getLives(), mPlayer1.getNrKilled(), mPlayer1.getNrLeft(), mPlayer1.getNrShoots());
+				mText.timer(mPlayer1);
 			} else {
 				mText.drawUI(mBitmap);
-				mText.viewBigScore(mPlayer.getScore());
+				mText.viewBigScore(mPlayer1.getScore());
 				if(save){
 					mText.saved();
 				}

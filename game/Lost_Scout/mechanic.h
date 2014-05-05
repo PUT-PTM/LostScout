@@ -15,5 +15,6 @@ void Restart(Player &mPlayer, Enemy mEnemy[], Bullet mBullet[], Config &mConf, i
 void TangoDown(Enemy mEnemy[], Bullet mBullet[], int maxE, int maxB, Player &mPlayer, Sound &mSound);
 
 int getLevel(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &mSound);
+int getPlayers(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &mSound);
 void PlayerUpgrade(Upgrade &mUpgrade, Player &mPlayer, Sound &mSound);
 };
