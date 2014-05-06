@@ -99,6 +99,7 @@
     <ClCompile Include="upgrade.cpp" />
     <ClCompile Include="wave.cpp" />
     <ClCompile Include="_STM.cpp" />
+    <ClCompile Include="_STM2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />

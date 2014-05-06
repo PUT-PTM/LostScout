@@ -362,9 +362,9 @@ int Mechanic::getPlayers(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound
 			al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, 200, ALLEGRO_ALIGN_CENTER , "Jeden gracz");
 		}
 		if(wybor == 2){
-			al_draw_textf(font24, al_map_rgb(255,0,0), mConf.getWidth() / 2, 250, ALLEGRO_ALIGN_CENTER , "Dwóch graczy");
+			al_draw_textf(font24, al_map_rgb(255,0,0), mConf.getWidth() / 2, 250, ALLEGRO_ALIGN_CENTER , "Dwoch graczy");
 		} else {
-			al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, 250, ALLEGRO_ALIGN_CENTER , "Dwóch graczy");
+			al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, 250, ALLEGRO_ALIGN_CENTER , "Dwoch graczy");
 		}
 
 		mText.viewInfo();

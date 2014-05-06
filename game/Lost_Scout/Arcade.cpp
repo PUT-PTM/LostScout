@@ -23,7 +23,7 @@ void arcade(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_
 	bool pause = false;
 	int maxenemy;
 
-	Player mPlayer;
+	Player mPlayer(false);
 	Text mText;
 	Mechanic mMech;
 	Sound mSound;

@@ -61,7 +61,7 @@ public:
 	int getScore();
 	void setScore(int score);
 
-	Player();
+	Player(bool drugi);
 	~Player();
 
 	void up();

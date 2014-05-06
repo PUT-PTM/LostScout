@@ -6,9 +6,11 @@
 #include "player.h"
 
 #include "_STM.h"
-Player::Player(){
-
+Player::Player(bool drugi){
+	if(!drugi)
 	player = al_load_bitmap("Img/player.png");
+	else
+	player = al_load_bitmap("Img/player2.png");
 	imgX = al_get_bitmap_width(player);
 	imgY = al_get_bitmap_height(player);
 	dmg = 10;
