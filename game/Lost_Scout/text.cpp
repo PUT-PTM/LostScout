@@ -36,6 +36,17 @@ void Text::viewInfo(){
 void Text::viewScore(int wynik, int live, int killed, int left, int shoots){
 	al_draw_textf(font12s, al_map_rgb(255,255,255), 30, 5, 0, "Wynik : %i     Pozostale zycia : %i     Zabici : %i     Pominieci : %i      Strzalow : %i", wynik, live, killed, left, shoots);
 }
+void Text::viewScoreMulti(Player mPlayer1, Player mPlayer2){			
+	al_draw_textf(font12s, al_map_rgb(0,255,0), 30, -2, 0, "Player 1 =   Wynik : %i     Pozostale zycia : %i     Zabici : %i       Strzalow : %i", mPlayer1.getScore(),  mPlayer1.getLives(), mPlayer1.getNrKilled(), mPlayer1.getNrShoots());
+	al_draw_textf(font12s, al_map_rgb(255,255,0), 30, 10, 0, "Player 2 =   Wynik : %i     Pozostale zycia : %i     Zabici : %i       Strzalow : %i", mPlayer2.getScore(),  mPlayer2.getLives(), mPlayer2.getNrKilled(), mPlayer2.getNrShoots());
+	al_draw_textf(font12s, al_map_rgb(255,255,255), 500, 4, 0, "Pominieci : %i", mPlayer1.getNrLeft());
+}
+void Text::cziter(){
+	al_draw_textf(font12s, al_map_rgb(255,0,0), 40, 50, 0, "CZITER!");
+	al_draw_textf(font12s, al_map_rgb(255,0,0), 550, 50, 0, "CZITER!");
+	al_draw_textf(font12s, al_map_rgb(255,0,0), 40, 420, 0, "CZITER!");
+	al_draw_textf(font12s, al_map_rgb(255,0,0), 550, 420, 0, "CZITER!");
+}
 void Text::viewBigScore(int wynik){
 	Config mConf;
 	
@@ -44,12 +55,32 @@ void Text::viewBigScore(int wynik){
 	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 70, ALLEGRO_ALIGN_CENTER , "Wcisnij 'ENTER' by zapisac wynik");
 	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 100, ALLEGRO_ALIGN_CENTER , "Wcisnij 'Esc' by przejsc do menu");
 }
+void Text::viewBigScore(int wynik1, int wynik2){
+	Config mConf;
+	
+	al_draw_textf(font36, al_map_rgb(220,220,220), mConf.getWidth() / 2, 70, ALLEGRO_ALIGN_CENTER , "Wynik koncowy");
+	al_draw_textf(font24, al_map_rgb(0,255,0), mConf.getWidth() / 2, 120, ALLEGRO_ALIGN_CENTER , "Player 1:         %i", wynik1);
+	al_draw_textf(font24, al_map_rgb(255,255,0), mConf.getWidth() / 2, 160, ALLEGRO_ALIGN_CENTER , "Player 2:         %i", wynik2);
+	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 90, ALLEGRO_ALIGN_CENTER , "Wcisnij 'R' by zagrac ponownie");
+	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 120, ALLEGRO_ALIGN_CENTER , "Wcisnij 'ENTER' by zapisac wynik");
+	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 150, ALLEGRO_ALIGN_CENTER , "Wcisnij 'Esc' by przejsc do menu");
+}
+
 void Text::viewBigScoreArc(int wynik){
 	Config mConf;
 	
 	al_draw_textf(font36, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2, ALLEGRO_ALIGN_CENTER , "Wynik koncowy: %i", wynik);
 	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 70, ALLEGRO_ALIGN_CENTER , "Wcisnij 'R' by zagrac ponownie");
 	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 100, ALLEGRO_ALIGN_CENTER , "Wcisnij 'Esc' by przejsc do menu");
+}
+void Text::viewBigScoreArc(int wynik1, int wynik2){
+	Config mConf;
+	
+	al_draw_textf(font36, al_map_rgb(220,220,220), mConf.getWidth() / 2, 70, ALLEGRO_ALIGN_CENTER , "Wynik koncowy");
+	al_draw_textf(font24, al_map_rgb(0,255,0), mConf.getWidth() / 2, 120, ALLEGRO_ALIGN_CENTER , "Player 1:         %i", wynik1);
+	al_draw_textf(font24, al_map_rgb(255,255,0), mConf.getWidth() / 2, 160, ALLEGRO_ALIGN_CENTER , "Player 2:         %i", wynik2);
+	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 120, ALLEGRO_ALIGN_CENTER , "Wcisnij 'R' by zagrac ponownie");
+	al_draw_textf(font24, al_map_rgb(220,220,220), mConf.getWidth() / 2, mConf.getHeight() / 2 + 150, ALLEGRO_ALIGN_CENTER , "Wcisnij 'Esc' by przejsc do menu");
 }
 void Text::saved(){
 	Config mConf;

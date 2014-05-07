@@ -79,4 +79,5 @@ public:
 
 
 	void move( char * buffer); // KOD DO STMa
+	bool drugi;
 };

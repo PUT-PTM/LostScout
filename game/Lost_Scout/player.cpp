@@ -7,17 +7,21 @@
 
 #include "_STM.h"
 Player::Player(bool drugi){
+	this->drugi = drugi;
 	if(!drugi)
-	player = al_load_bitmap("Img/player.png");
+		player = al_load_bitmap("Img/player.png");
 	else
-	player = al_load_bitmap("Img/player2.png");
+		player = al_load_bitmap("Img/player2.png");
 	imgX = al_get_bitmap_width(player);
 	imgY = al_get_bitmap_height(player);
 	dmg = 10;
 	lives = 3;
 	Config mConf;
-	x = mConf.getWidth() / 2;
-	y = mConf.getHeight() /2;
+	if(!drugi)
+		x = mConf.getWidth() / 2 + 30;
+	else
+		x = mConf.getWidth() / 2 - 30;
+	y = 2* mConf.getHeight() /3;
 	speed = 7;
 	crash_x = 16;
 	crash_y = 17;
@@ -209,61 +213,7 @@ while(!end){
 					y = mConf.getHeight() -50;
 		} else if(y < 0 + 55){
 					y = 55;
-				}
-		/*
-		// OŒ X
-		if(buffer[1] < -10 && buffer[1] > -20){
-			//wolno X prawo
-				x += speed/2;
-				if(x > mConf.getWidth() - 55){
-					x = mConf.getWidth() -55;
-				}
-		} else if(buffer[1] <= -20) {
-			//szybko X prawo
-				x += speed;
-				if(x > mConf.getWidth() - 55){
-					x = mConf.getWidth() -55;
-				}
-		} else if(buffer[1] > 10 && buffer[1] < 20) {
-			//wolno X lewo
-				x -= speed/2;
-				if(x < 0 + 50){
-					x = 50;
-				}
-		} else if(buffer[1] >= 20) {
-			//szybko X lewo
-				x -= speed;
-				if(x < 0 + 50){
-					x = 50;
-				}
-					}
-
-		// OŒ Y
-		if(buffer[2] > 15 && buffer[2] < 30){
-			//wolno Y góra
-				y -= speed/2;
-				if(y < 0 + 55){
-					y = 55;
-				}
-		} else if(buffer[2] >= 30) {
-			//szybko Y góra
-				y -= speed;
-				if(y < 0 + 55){
-					y = 55;
-				}
-		} else if(buffer[2] < -15 && buffer[2] > -30) {
-			//wolno Y dó³
-				y += speed/2;
-				if(y > mConf.getHeight() - 50){
-					y = mConf.getHeight() -50;
-				}
-		} else if(buffer[2] <= -30) {
-			//szybko Y dó³
-				y += speed;
-				if(y > mConf.getHeight() - 50){
-					y = mConf.getHeight() -50;
-				}
 		}
-		*/
+
 	}
 	////// KOD DO STMa

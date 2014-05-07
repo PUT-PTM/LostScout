@@ -5,8 +5,8 @@
 #include "enemy.h"
 #include "config.h"
 Config::Config(){
-	build = 1112;
-	status = "RC";
+	build = 1856;
+	status = "Alpha in dev";
 	gameOver = false;
 }
 Config::~Config(){

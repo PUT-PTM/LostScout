@@ -61,6 +61,7 @@ void Mechanic::NewEnemy(Enemy mEnemy[], int max, Player &mPlayer, int level){
 }
 
 void Mechanic::TangoDown(Enemy mEnemy[], Bullet mBullet[], int maxE, int maxB, Player &mPlayer, Wave &mWave, Sound &mSound){
+	bool zabityzkuli = false;
 	for(int j =0; j < maxE; j++){
 		if(mEnemy[j].getLive()){
 			for(int i = 0; i < maxB; i++){
@@ -75,40 +76,50 @@ void Mechanic::TangoDown(Enemy mEnemy[], Bullet mBullet[], int maxE, int maxB, P
 						mBullet[i].setLive(false);
 						if(mEnemy[j].getHP() > 0){
 							cout << "Trafiony! Pozosta³e ¿ycie:" << mEnemy[j].getHP() << endl;
+						} else {
+							zabityzkuli = true;
 						}
 					}
 				}
 			}
-			if(mEnemy[j].getHP() <= 0){
-				mEnemy[j].setLive(false);
-				int score = mPlayer.getScore() + mEnemy[j].getMaxHP();
-				mPlayer.setScore(score);
-				cout << "Zabity! Wynik:" << score << endl;
-				mPlayer.incNrKilled();
-				switch(mPlayer.getStage()){
-				case 0:
-					mSound.zergDie();
-					break;
-				case 1:
-					mSound.zergDie();
-					break;
-				case 2:
-					mSound.terranDie();
-					break;
-				case 3:
-					mSound.protossDie();
-					break;
+			
+				
+				if(mEnemy[j].getHP() <= 0){
+					mEnemy[j].setLive(false);
+					if(zabityzkuli == true){
+						int score = mPlayer.getScore() + mEnemy[j].getMaxHP();
+						mPlayer.setScore(score);
+						cout << "Zabity! Wynik:" << score << endl;
+						mPlayer.incNrKilled();
+						zabityzkuli = false;
+					} else {
+						mPlayer.incNrLeft();
+					}
+					switch(mPlayer.getStage()){
+					case 0:
+						mSound.zergDie();
+						break;
+					case 1:
+						mSound.zergDie();
+						break;
+					case 2:
+						mSound.terranDie();
+						break;
+					case 3:
+						mSound.protossDie();
+						break;
+					}
+					if(mEnemy[j].getType() == 6){
+						mWave.setBossAlive(false);
+					}
+					if(mEnemy[j].getType() == 16){
+						mWave.setBossAlive(false);
+					}
+					if(mEnemy[j].getType() == 26){
+						mWave.setBossAlive(false);
+					}
 				}
-				if(mEnemy[j].getType() == 6){
-					mWave.setBossAlive(false);
-				}
-				if(mEnemy[j].getType() == 16){
-					mWave.setBossAlive(false);
-				}
-				if(mEnemy[j].getType() == 26){
-					mWave.setBossAlive(false);
-				}
-			}
+			
 		}
 	}
 }
@@ -173,8 +184,11 @@ void Mechanic::Restart(Player &mPlayer, Enemy mEnemy[], Bullet mBullet[], Config
 	cout << "Restart gry";
 	mPlayer.setDmg(10);
 	mPlayer.setLives(3);
-	mPlayer.setX(mConf.getWidth() / 2);
-	mPlayer.setY(mConf.getHeight() / 2);
+	if(!mPlayer.drugi)
+		mPlayer.setX(mConf.getWidth() / 2 + 30);
+	else
+		mPlayer.setX(mConf.getWidth() / 2 - 30);
+	mPlayer.setY(2* mConf.getHeight() /3);
 	mPlayer.setScore(0);
 	mPlayer.setTimer(0);
 	mPlayer.setStage(1);
@@ -196,8 +210,11 @@ void Mechanic::Restart(Player &mPlayer, Enemy mEnemy[], Bullet mBullet[], Config
 	cout << "Restart gry" << endl;
 	mPlayer.setDmg(10);
 	mPlayer.setLives(3);
-	mPlayer.setX(mConf.getWidth() / 2);
-	mPlayer.setY(mConf.getHeight() / 2);
+	if(!mPlayer.drugi)
+		mPlayer.setX(mConf.getWidth() / 2 + 30);
+	else
+		mPlayer.setX(mConf.getWidth() / 2 - 30);
+	mPlayer.setY(2* mConf.getHeight() /3);
 	mPlayer.setScore(0);
 	mPlayer.setTimer(0);
 	mPlayer.setStage(1);

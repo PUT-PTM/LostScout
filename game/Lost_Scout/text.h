@@ -15,9 +15,13 @@ public:
 	~Text();
 	void viewVersion();
 	void viewScore(int wynik, int live, int killed, int left, int shoots);
+	void viewScoreMulti(Player mPlayer1, Player mPlayer2);
 	void viewInfo();
+	void cziter();
 	void viewBigScore(int wynik);
+	void viewBigScore(int wynik1, int wynik2);
 	void viewBigScoreArc(int wynik);
+	void viewBigScoreArc(int wynik1, int wynik2);
 	void saved();
 	void timer(Player & mPlayer);
 	void drawHP(int maxHP, int hp, int x, int y);

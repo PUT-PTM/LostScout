@@ -20,6 +20,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	Wave mWave;
 
 	Bullet *mBullet = new Bullet [mConf.getMaxBullet()];
+	Bullet *mBullet2 = new Bullet [mConf.getMaxBullet()];
 	Enemy *mEnemy = new Enemy [mConf.getMaxEnemy()];
 	Upgrade mUpgrade;
 	cout << "Start gry" << endl;
@@ -28,8 +29,6 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	bool score = false;
 	bool save = false;
 	bool pause = false;
-	int blokstrzal = 0;
-	int blokstrzal2 = 0;
 	Player mPlayer1(false);
 	Player mPlayer2(true);
 	Text mText;
@@ -45,7 +44,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	al_register_event_source(eventQueue, al_get_timer_event_source(timer));
 
 	bool keys[11] = {false, false, false, false, false, false, false, false, false, false, false};
-
+	bool czity[2] = {false, false};
 
 	al_start_timer(timer);	
 
@@ -66,6 +65,8 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 		buffer_out2[i]=0;	
 		buffer_in2[i]=0;
 	}
+	int blokstrzal = 0;
+	int blokstrzal2 = 0;
 	////////////////STM
 
 	int graczy = mMech.getPlayers(eventQueue, mBitmap, mSound);
@@ -76,12 +77,12 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 		if(conn){
 			ReadInputReport(buffer_in);	//////////STM
 		}else{
-			cout <<"'";
+			//cout <<"'";
 		}
 		if(conn2 && graczy == 2){
 			ReadInputReport2(buffer_in2);	//////////STM
 		}else if (graczy == 2){
-			cout <<"*";
+			//cout <<"*";
 		}
 
 		if(ev.type == ALLEGRO_EVENT_KEY_DOWN){
@@ -91,14 +92,26 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 				keys[UP] = true;
 				break;
 			case ALLEGRO_KEY_F1:
-				if(!cziter){
-					cziter = true;
-					cout << "Lol, cziterrr" << endl;
-				}
-				else
-				{
-					cziter = false;
-					cout << "Wracasz na dobre tory..." << endl;
+				czity[0] = true;
+				cout << "F1" << endl;
+				break;
+			case ALLEGRO_KEY_F2:
+				czity[1] = true;
+				cout << "F2" << endl;
+				break;
+			case ALLEGRO_KEY_F3:
+				cout << "F3" << endl;
+				if(czity[0] && czity[1]){
+					cout << "Czit wprowadzony" << endl;
+					if(!cziter){
+						cziter = true;
+						cout << "Lol, cziterrr" << endl;
+					}
+					else
+					{
+						cziter = false;
+						cout << "Wracasz na dobre tory..." << endl;
+					}
 				}
 				break;
 			case ALLEGRO_KEY_DOWN:
@@ -134,7 +147,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 				case ALLEGRO_KEY_G:
 					if(!pause && !mConf.gameOver && mPlayer2.getRestTime() == 0){
 						mSound.shoot();
-						mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer2);
+						mMech.Fire(mBullet2, mConf.getMaxBullet(), mPlayer2);
 					}
 					keys[SPACE2] = true;
 					break;
@@ -154,7 +167,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 					mSound.click();
 					mMech.Restart(mPlayer1, mEnemy, mBullet, mConf);
 					if(graczy == 2){
-					mMech.Restart(mPlayer2, mEnemy, mBullet, mConf);
+					mMech.Restart(mPlayer2, mEnemy, mBullet2, mConf);
 					}
 					save = false;
 					mConf.gameOver = false;
@@ -201,7 +214,12 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 			case ALLEGRO_KEY_SPACE:
 				keys[SPACE] = false;
 				break;
-
+			case ALLEGRO_KEY_F1:
+				czity[0] = false;
+				break;
+			case ALLEGRO_KEY_F2:
+				czity[1] = false;
+				break;
 			if(graczy == 2){
 				//PLAYER 2
 				case ALLEGRO_KEY_W:
@@ -272,6 +290,10 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 						if(mBullet[i].getLive())
 							mBullet[i].update();
 					}
+					for(int i=0 ; i < mConf.getMaxBullet(); i++){
+						if(mBullet2[i].getLive())
+							mBullet2[i].update();
+					}
 					if(mUpgrade.getLive())
 						mUpgrade.update(mPlayer1);
 					//!!!
@@ -293,13 +315,15 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 						
 						mMech.TangoDown( mEnemy, mBullet, mConf.getMaxEnemy(), mConf.getMaxBullet(), mPlayer1, mWave, mSound);
 						if(graczy == 2)
-							mMech.TangoDown( mEnemy, mBullet, mConf.getMaxEnemy(), mConf.getMaxBullet(), mPlayer2, mWave, mSound);
-						
+							mMech.TangoDown( mEnemy, mBullet2, mConf.getMaxEnemy(), mConf.getMaxBullet(), mPlayer2, mWave, mSound);
+						///##########################
 						if(!cziter){
 						
 							mMech.PlayerColl(mEnemy, mConf.getMaxEnemy(), mPlayer1, mSound);
 							if(graczy == 2)
 								mMech.PlayerColl(mEnemy, mConf.getMaxEnemy(), mPlayer2, mSound);
+						} else {
+							mText.cziter();
 						}
 						mMech.PlayerUpgrade(mUpgrade, mPlayer1, mSound);
 						if(graczy == 2)
@@ -333,7 +357,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 						if(mPlayer2.getRestTime() == 0){
 							cout << "a";
 							mSound.shoot();
-							mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer2);
+							mMech.Fire(mBullet2, mConf.getMaxBullet(), mPlayer2);
 							blokstrzal2 = 20;
 						}
 					} else if(buffer_in2[3] == 0){
@@ -370,6 +394,8 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 				for(int i=0 ; i < mConf.getMaxBullet(); i++){
 					if(mBullet[i].getLive())
 						mBullet[i].show(mPlayer1); ////////////////////////////////////
+					if(mBullet2[i].getLive())
+						mBullet2[i].show(mPlayer2);
 				}
 				for(int i=0 ; i < mConf.getMaxEnemy(); i++){
 					if(mEnemy[i].getLive())
@@ -394,15 +420,22 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 				}
 
 				mText.drawUI(mBitmap);
-				mText.viewScore(mPlayer1.getScore(), mPlayer1.getLives(), mPlayer1.getNrKilled(), mPlayer1.getNrLeft(), mPlayer1.getNrShoots());
+				if(graczy != 2)
+					mText.viewScore(mPlayer1.getScore(), mPlayer1.getLives(), mPlayer1.getNrKilled(), mPlayer1.getNrLeft(), mPlayer1.getNrShoots());
+				else
+					mText.viewScoreMulti(mPlayer1, mPlayer2);
 				mText.timer(mPlayer1);
 			} else {
+				// KONIEC GRY //////////////////////////
 				mText.drawUI(mBitmap);
-				mText.viewBigScore(mPlayer1.getScore());
-				if(save){
-					mText.saved();
+				if(graczy != 2){
+					mText.viewBigScore(mPlayer1.getScore());
+					if(save){
+						mText.saved();
+					}
+				} else {
+					mText.viewBigScore(mPlayer1.getScore(), mPlayer2.getScore());
 				}
-
 
 			}
 			mText.viewVersion();
@@ -414,5 +447,6 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	cout << "Wyjœcie z pêtli" << endl;
 	al_destroy_event_queue(eventQueue);
 	delete [] mBullet;
+	delete [] mBullet2;
 	delete [] mEnemy;
 }
