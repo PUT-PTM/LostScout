@@ -15,8 +15,8 @@
 #include "_STM.h"
 enum KEYS{ UP, DOWN, LEFT, RIGHT, SPACE, UP2, DOWN2, LEFT2, RIGHT2, SPACE2, R };
 
-void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TIMER *timer, Bitmap & mBitmap){
-	Config mConf;
+void game(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TIMER *timer, Bitmap & mBitmap){
+	//Config mConf;
 	Wave mWave;
 
 	Bullet *mBullet = new Bullet [mConf.getMaxBullet()];
@@ -33,7 +33,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 	Player mPlayer2(true);
 	Text mText;
 	Mechanic mMech;
-	Sound mSound;
+	Sound mSound(mConf);
 	Background mBG;
 
 	bool cziter = FALSE;
@@ -124,7 +124,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 				keys[LEFT] = true;
 				break;
 			case ALLEGRO_KEY_SPACE:
-				if(!pause && !mConf.gameOver && mPlayer1.getRestTime() == 0){
+				if(!pause && !mConf.gameOver && mPlayer1.getRestTime() == 0 && mPlayer2.getRestTime() == 0){
 					mSound.shoot();
 					mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer1);
 				}
@@ -145,7 +145,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 					keys[LEFT2] = true;
 					break;
 				case ALLEGRO_KEY_G:
-					if(!pause && !mConf.gameOver && mPlayer2.getRestTime() == 0){
+					if(!pause && !mConf.gameOver && mPlayer1.getRestTime() == 0 && mPlayer2.getRestTime() == 0){
 						mSound.shoot();
 						mMech.Fire(mBullet2, mConf.getMaxBullet(), mPlayer2);
 					}
@@ -172,6 +172,9 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 					save = false;
 					mConf.gameOver = false;
 				}
+				break;
+			case ALLEGRO_KEY_M:
+				mSound.muteSound(mConf);
 				break;
 			case ALLEGRO_KEY_ENTER:
 				if(mConf.gameOver && save == false && graczy == 1){
@@ -245,6 +248,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 			mSound.click();
 			al_rest(0.35);
 			end = true;
+			exit = 1;
 		}
 		else if(ev.type == ALLEGRO_EVENT_TIMER){		
 
@@ -284,7 +288,7 @@ void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TI
 			}
 			if(!mConf.gameOver){
 				if(!pause){
-					mWave.wyzwalacz(mEnemy, mConf.getMaxEnemy(), mPlayer1, mBitmap, mUpgrade);		//!!!
+					mWave.wyzwalacz(mEnemy, mConf.getMaxEnemy(), mPlayer1, mPlayer2, mBitmap, mUpgrade);		//!!!
 
 					for(int i=0 ; i < mConf.getMaxBullet(); i++){
 						if(mBullet[i].getLive())

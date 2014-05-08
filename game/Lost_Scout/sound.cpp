@@ -3,7 +3,7 @@
 
 #include "sound.h"
 
-Sound::Sound(){
+Sound::Sound(Config &mConf){
 
 	nrTrack = rand() % 6;
 	menuMusicS = NULL;
@@ -77,6 +77,9 @@ Sound::Sound(){
 	dmgS = al_load_sample("music/fx/dmg.wav");
 	newUpS = NULL;
 	newUpS = al_load_sample("music/fx/newUp.wav");
+
+
+	mute = mConf.mute;
 }
 
 Sound::~Sound(){
@@ -106,11 +109,14 @@ Sound::~Sound(){
 }
 
 void Sound::menu(){
+	if(!mute){
 	cout << "Muzyka start - menu" << endl;
 	al_play_sample_instance(menuMusicI);
+	}
 }
 
 void Sound::game(){
+	if(!mute){
 	switch(nrTrack){
 	case 0:
 		//al_play_sample_instance(gotI);                                //Czy ja chcê to dawaæ? :/
@@ -147,31 +153,39 @@ void Sound::game(){
 		}
 		break;
 	}
-	
+	}
 }
 
 void Sound::point(){
+	if(!mute)
 	al_play_sample_instance(pointI);
 }
 void Sound::click(){
+	if(!mute)
 	al_play_sample_instance(clickI);
 }
 void Sound::shoot(){
+	if(!mute)
 	al_play_sample(shootS, 0.5, 0, 1.2, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 void Sound::zergDie(){
+	if(!mute)
 	al_play_sample(zergDieS, 0.5, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 void Sound::terranDie(){
+	if(!mute)
 	al_play_sample(terranDieS, 0.8, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 void Sound::protossDie(){
+	if(!mute)
 	al_play_sample(protossDieS, 0.8, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 void Sound::playerDie(){
+	if(!mute)
 	al_play_sample(playerDieS, 1.5, 0, 0.8, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 void Sound::upgrade(int type){
+	if(!mute){
 	switch(type){
 	case 1:
 	al_play_sample(dmgS, 1.0, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -180,8 +194,30 @@ void Sound::upgrade(int type){
 	al_play_sample(lifeS, 1.0, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 	break;
 	}
+	}
 }
 void Sound::newUpgrade(){
+	if(!mute)
 	al_play_sample(newUpS, 1.0, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 	
+}
+
+void Sound::muteSound(Config &mConf){
+	if(!mConf.mute){
+		mConf.mute = true;
+		mute = true;
+		cout << "Dzwiek wyciszony" << endl;
+		al_stop_sample_instance(menuMusicI);
+		al_stop_sample_instance(gotI);
+		al_stop_sample_instance(t1I);
+		al_stop_sample_instance(t2I);
+		al_stop_sample_instance(t3I);
+		al_stop_sample_instance(t4I);
+
+
+	} else {
+		mConf.mute = false;
+		mute = false;
+		cout << "Dzwiek przywrocony" << endl;
+	}
 }

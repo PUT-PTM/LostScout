@@ -13,19 +13,23 @@ Wave::Wave(){
 	bossAlive = true;
 }
 
-void Wave::wyzwalacz(Enemy mEnemy[], int max, Player &mPlayer, Bitmap &mBitmap, Upgrade &mUpgrade){
+void Wave::wyzwalacz(Enemy mEnemy[], int max, Player &mPlayer, Player &mPlayer2, Bitmap &mBitmap, Upgrade &mUpgrade){
 
 	if(bossAlive == false){
 		bossAlive = true;
 		mPlayer.setStage(mPlayer.getStage() + 1);
+		mPlayer2.setStage(mPlayer.getStage());
 		if(mPlayer.getStage() > 3){
 			mPlayer.setStage(1);
 			mPlayer.setRepeat(mPlayer.getRepeat() + 1);
+			mPlayer2.setStage(1);
+			mPlayer2.setRepeat(mPlayer.getRepeat());
 		}
 		mPlayer.setSubStage(1);
 		mPlayer.setTimer(0);
 		mPlayer.setRestTime(300);
-
+		mPlayer2.setSubStage(1);
+		mPlayer2.setTimer(0);
 	}
 
 		switch(mPlayer.getStage()){

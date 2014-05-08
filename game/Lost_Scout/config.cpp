@@ -8,6 +8,7 @@ Config::Config(){
 	build = 1856;
 	status = "Alpha in dev";
 	gameOver = false;
+	mute = false;
 }
 Config::~Config(){
 }

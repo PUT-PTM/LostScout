@@ -15,7 +15,7 @@ private:
 public:
 
 	Wave();
-	void wyzwalacz(Enemy mEnemy[], int max, Player &mPlayer, Bitmap &mBitmap, Upgrade &mUpgrade);
+	void Wave::wyzwalacz(Enemy mEnemy[], int max, Player &mPlayer1, Player &mPlayer2, Bitmap &mBitmap, Upgrade &mUpgrade);
 
 	bool getReady();
 	void setReady(int ready);

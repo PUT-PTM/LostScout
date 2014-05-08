@@ -17,10 +17,10 @@
 #endif
 
 	class Bitmap;
-
-	void game(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap);
-	int menu(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap);
-	void score(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap);
-	void arcade(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap);
+	class Config;
+	void game(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap);
+	int menu(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap);
+	void score(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap);
+	void arcade(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap);
 
 	void saveScoreFile(string name, int score);

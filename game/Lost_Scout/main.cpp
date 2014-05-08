@@ -13,8 +13,8 @@ int main(){
 	ALLEGRO_TIMER *timer = NULL;
 	
 	//FullScr
-		//		al_set_new_display_flags(ALLEGRO_FULLSCREEN);
-				al_set_new_display_flags(ALLEGRO_RESIZABLE);
+				al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+		//		al_set_new_display_flags(ALLEGRO_RESIZABLE);
 	//FullScr
 
 	if(!al_init()) {
@@ -47,25 +47,28 @@ int main(){
 	Bitmap mBitmap;
 
 	bool end = false;
+	int exit = 0;
+	int what = 0;
 	while(!end){
-	int what = menu(display, eventQueue, timer, mBitmap);
+		if(exit == 0)
+			 what = menu(mConf, exit, display, eventQueue, timer, mBitmap);
 
 
-
+	if(exit == 0)
 		switch(what){
 		case 1:
 			cout << "Game" << endl;
-			game(display, eventQueue, timer, mBitmap);
+			game(mConf, exit, display, eventQueue, timer, mBitmap);
 			break;
 
 		case 2:
 			cout << "Arcade" << endl;
-			arcade(display, eventQueue, timer, mBitmap);
+			arcade(mConf, exit, display, eventQueue, timer, mBitmap);
 			break;
 
 		case 3:
 			cout << "Score" << endl;
-			score(display, eventQueue, timer, mBitmap);
+			score(mConf, exit, display, eventQueue, timer, mBitmap);
 			break;
 
 		case 4:

@@ -28,9 +28,13 @@ private:
 	ALLEGRO_SAMPLE *newUpS;
 	ALLEGRO_SAMPLE *lifeS;
 	ALLEGRO_SAMPLE *dmgS;
+
+	bool mute;
 public:
-	Sound();
+	Sound(Config &mConf);
 	~Sound();
+
+	void muteSound(Config &mConf);
 
 
 	void menu();

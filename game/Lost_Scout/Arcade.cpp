@@ -13,8 +13,8 @@
 
 enum KEYS{ UP, DOWN, LEFT, RIGHT, SPACE, UP2, DOWN2, LEFT2, RIGHT2, SPACE2, R };
 
-void arcade(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TIMER *timer, Bitmap & mBitmap){
-	Config mConf;
+void arcade(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TIMER *timer, Bitmap & mBitmap){
+	//Config mConf;
 	Bullet *mBullet = new Bullet [mConf.getMaxBullet()];
 	Bullet *mBullet2 = new Bullet [mConf.getMaxBullet()];
 	cout << "Start gry" << endl;
@@ -28,7 +28,7 @@ void arcade(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_
 	Player mPlayer2(true);
 	Text mText;
 	Mechanic mMech;
-	Sound mSound;
+	Sound mSound(mConf);
 	Background mBG;
 
 	eventQueue = al_create_event_queue();
@@ -115,7 +115,7 @@ void arcade(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_
 					break;
 				case ALLEGRO_KEY_SPACE:
 					if(!pause){
-						if(mPlayer.getRestTime() == 0){
+						if(!pause && !mConf.gameOver && mPlayer.getRestTime() == 0 && mPlayer2.getRestTime() == 0){
 						mSound.shoot();
 						mMech.Fire(mBullet, mConf.getMaxBullet(), mPlayer);
 						}
@@ -138,7 +138,7 @@ void arcade(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_
 						keys[LEFT2] = true;
 						break;
 					case ALLEGRO_KEY_G:
-						if(!pause && !mConf.gameOver && mPlayer2.getRestTime() == 0){
+						if(!pause && !mConf.gameOver && mPlayer.getRestTime() == 0 && mPlayer2.getRestTime() == 0){
 							mSound.shoot();
 							mMech.Fire(mBullet2, mConf.getMaxBullet(), mPlayer2);
 						}
@@ -161,6 +161,9 @@ void arcade(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_
 						if(graczy == 2){
 						mMech.Restart(mPlayer2, mEnemy, mBullet2, mConf);
 					}
+					break;
+				case ALLEGRO_KEY_M:
+					mSound.muteSound(mConf);
 					break;
 				case ALLEGRO_KEY_P:
 					if(!mConf.gameOver){
@@ -216,6 +219,7 @@ void arcade(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_
 
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
 			end = true;
+			exit = 1;
 		}
 
 		else if(ev.type == ALLEGRO_EVENT_TIMER){

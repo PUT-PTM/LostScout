@@ -4,12 +4,12 @@
 #include "text.h"
 #include "bitmap.h"
 
-int menu (ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap){
+int menu (Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIMER *timer, Bitmap & mBitmap){
 	cout << "Menu" << endl;
 
-	Config mConf;
+	//Config mConf;
 	Text mText;
-	Sound mSound;
+	Sound mSound(mConf);
 	eventQueue = al_create_event_queue();
 	al_register_event_source(eventQueue,al_get_keyboard_event_source());
 	al_register_event_source(eventQueue, al_get_display_event_source(display));
@@ -47,12 +47,16 @@ int menu (ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIM
 				al_rest(0.35);
 				end = true;
 				break;
+			case ALLEGRO_KEY_M:
+				mSound.muteSound(mConf);
+				if(mConf.mute == false)
+					mSound.menu();
+				break;
 			case ALLEGRO_KEY_ESCAPE:
 				mSound.click();
 				al_rest(0.35);
 				wybor = 0;
 				end = true;
-
 				break;
 
 			}
@@ -60,6 +64,7 @@ int menu (ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_TIM
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
 			wybor = 0;
 			end = true;
+			exit = 1;
 		}
 
 		if(wybor <=0 && !end){

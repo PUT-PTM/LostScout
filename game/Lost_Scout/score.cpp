@@ -5,10 +5,10 @@
 #include "text.h"
 #include "score.h"
 
-void score(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TIMER *timer, Bitmap & mBitmap){
-	Config mConf;
+void score(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_TIMER *timer, Bitmap & mBitmap){
+	//Config mConf;
 	Text mText;
-	Sound mSound;
+	Sound mSound(mConf);
 	cout << "Wyniki" << endl;
 	bool end = false;
 	ALLEGRO_FONT *font36 = al_load_font("Starcraft.ttf", 36, 0);
@@ -62,6 +62,7 @@ void score(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *eventQueue,  ALLEGRO_T
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
 			end = true;
+			exit = 1;
 		}
 
 		if(exist){

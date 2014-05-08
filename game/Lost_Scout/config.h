@@ -30,7 +30,7 @@ public:
 	Config();
 	~Config();
 
-
+	bool mute;
 private:
 	int build;
 	string status;
