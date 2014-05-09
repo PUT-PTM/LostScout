@@ -71,7 +71,7 @@ public:
 
 	void show();
 
-	void saveScore( ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap & mBitmap, Sound &mSound);
+	void saveScore(int &exit, ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap & mBitmap, Sound &mSound);
 
 	void incTimer();
 	int getTimer();

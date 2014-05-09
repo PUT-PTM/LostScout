@@ -61,7 +61,7 @@ void arcade(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QU
 	int blokstrzal2 = 0;
 	////////////////STM
 
-	int level = mMech.getLevel(eventQueue, mBitmap, mSound);
+	int level = mMech.getLevel(exit, eventQueue, mBitmap, mSound);
 	switch (level){
 	case 1: 
 		maxenemy = mConf.getArcadeEnemyEasy();
@@ -81,9 +81,10 @@ void arcade(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QU
 		break;
 	}
 	Enemy *mEnemy = new Enemy [maxenemy];
-
-	int graczy = mMech.getPlayers(eventQueue, mBitmap, mSound);
-
+	int graczy = 0;
+	if(exit == 0)
+	graczy = mMech.getPlayers(exit, eventQueue, mBitmap, mSound);
+	if(exit == 0)
 	while(!end){
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(eventQueue, &ev);

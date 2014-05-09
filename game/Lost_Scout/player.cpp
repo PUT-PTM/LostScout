@@ -98,7 +98,7 @@ void Player::show(){
 	al_draw_bitmap(player, x - imgX / 2, y - imgY / 2, 0);
 }
 
-void Player::saveScore(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap & mBitmap, Sound &mSound){
+void Player::saveScore(int &exit, ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap & mBitmap, Sound &mSound){
 
 	Config mConf;
 	ALLEGRO_FONT *font24 = al_load_font("Starcraft.ttf", 16, 0);
@@ -142,6 +142,7 @@ while(!end){
 		
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
 			end = true;
+			exit = 1;
 		}
 
 		al_draw_textf(font24, al_map_rgb(180,180,180), mConf.getWidth() /2, 80, ALLEGRO_ALIGN_CENTER, "Wynik: %i ", score);

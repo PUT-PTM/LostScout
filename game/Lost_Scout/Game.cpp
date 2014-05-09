@@ -69,9 +69,8 @@ void game(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEU
 	int blokstrzal2 = 0;
 	////////////////STM
 
-	int graczy = mMech.getPlayers(eventQueue, mBitmap, mSound);
-
-	while(!end){
+	int graczy = mMech.getPlayers(exit, eventQueue, mBitmap, mSound);
+	while(!end && exit == 0){
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(eventQueue, &ev);
 		if(conn){
@@ -179,7 +178,7 @@ void game(Config &mConf, int &exit, ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEU
 			case ALLEGRO_KEY_ENTER:
 				if(mConf.gameOver && save == false && graczy == 1){
 					mSound.click();
-					mPlayer1.saveScore(eventQueue, mBitmap, mSound);
+					mPlayer1.saveScore(exit, eventQueue, mBitmap, mSound);
 					save = true;
 				}
 				break;

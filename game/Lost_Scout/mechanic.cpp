@@ -232,7 +232,7 @@ void Mechanic::Restart(Player &mPlayer, Enemy mEnemy[], Bullet mBullet[], Config
 	}
 	mConf.gameOver = false;
 }
-int Mechanic::getLevel(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &mSound){
+int Mechanic::getLevel(int& exit, ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &mSound){
 	bool end = false;
 	ALLEGRO_FONT *font36 = al_load_font("Starcraft.ttf", 36, 0);
 	ALLEGRO_FONT *font24 = al_load_font("Starcraft.ttf", 24, 0);
@@ -278,6 +278,7 @@ int Mechanic::getLevel(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
 			wybor = 0;
 			end = true;
+			exit = 1;
 		}
 
 		if(wybor <=0 && !end){
@@ -318,7 +319,7 @@ int Mechanic::getLevel(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &
 
 }
 
-int Mechanic::getPlayers(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &mSound){
+int Mechanic::getPlayers(int& exit, ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound &mSound){
 	bool end = false;
 	ALLEGRO_FONT *font36 = al_load_font("Starcraft.ttf", 36, 0);
 	ALLEGRO_FONT *font24 = al_load_font("Starcraft.ttf", 24, 0);
@@ -364,6 +365,7 @@ int Mechanic::getPlayers(ALLEGRO_EVENT_QUEUE *eventQueue, Bitmap &mBitmap, Sound
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
 			wybor = 0;
 			end = true;
+			exit = 1;
 		}
 
 		if(wybor <=0 && !end){

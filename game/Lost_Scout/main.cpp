@@ -13,8 +13,8 @@ int main(){
 	ALLEGRO_TIMER *timer = NULL;
 	
 	//FullScr
-				al_set_new_display_flags(ALLEGRO_FULLSCREEN);
-		//		al_set_new_display_flags(ALLEGRO_RESIZABLE);
+		//		al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+				al_set_new_display_flags(ALLEGRO_RESIZABLE);
 	//FullScr
 
 	if(!al_init()) {
@@ -49,7 +49,7 @@ int main(){
 	bool end = false;
 	int exit = 0;
 	int what = 0;
-	while(!end){
+	while(!end && exit != 1){
 		if(exit == 0)
 			 what = menu(mConf, exit, display, eventQueue, timer, mBitmap);
 
